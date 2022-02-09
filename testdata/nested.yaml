@@ -3,6 +3,7 @@ string:
 float:
   nested:
     key: 1.23
+hyphenated-key: "valid"
 strings:
   nested:
     key: ["one", "two", "three"]

@@ -16,15 +16,17 @@ func TestParserWithNested(t *testing.T) {
 	t.Parallel()
 
 	type fields struct {
-		String  string
-		Float   float64
-		Strings fftest.StringSlice
+		String        string
+		Float         float64
+		HyphenatedKey string
+		Strings       fftest.StringSlice
 	}
 
 	expected := fields{
-		String:  "a string",
-		Float:   1.23,
-		Strings: fftest.StringSlice{"one", "two", "three"},
+		String:        "a string",
+		Float:         1.23,
+		HyphenatedKey: "valid",
+		Strings:       fftest.StringSlice{"one", "two", "three"},
 	}
 
 	for _, tc := range []struct {
@@ -54,6 +56,7 @@ func TestParserWithNested(t *testing.T) {
 				fs    = flag.NewFlagSet("fftest", flag.ContinueOnError)
 			)
 
+			fs.StringVar(&found.HyphenatedKey, "hyphenated-key", "", "a hyphenated yaml key")
 			fs.StringVar(&found.String, tc.stringKey, "", "string")
 			fs.Float64Var(&found.Float, tc.floatKey, 0, "float64")
 			fs.Var(&found.Strings, tc.stringsKey, "string slice")
